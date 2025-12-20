@@ -14,6 +14,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -77,19 +78,21 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(authorize->{
             
             //urls ko configure kiya h konse public rhenge or konse private
-
+            // authorize.requestMatchers("/login", "/authenticate").permitAll();
             authorize.requestMatchers("/user/**").authenticated();
             authorize.anyRequest().permitAll();
 
         });
+
+        
 
         // httpSecurity.formLogin(Customizer.withDefaults());
 
         httpSecurity.formLogin(formLogin->{
             formLogin.loginPage("/login");
             formLogin.loginProcessingUrl("/authenticate");
-            formLogin.successForwardUrl("/user/dashboard");
-            formLogin.failureForwardUrl("/login?error=true");
+             formLogin.successForwardUrl("/user/dashboard");
+            // formLogin.failureForwardUrl("/login?error=true");
 
             formLogin.usernameParameter("email");
             formLogin.passwordParameter("password");
@@ -104,6 +107,12 @@ public class SecurityConfig {
                 
             // });
         });
+        
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+         httpSecurity.logout(logoutForm->{
+             logoutForm.logoutUrl("/do-logout");
+            logoutForm.logoutSuccessUrl("/login?logout=true");
+         });
 
         return httpSecurity.build();
     }
