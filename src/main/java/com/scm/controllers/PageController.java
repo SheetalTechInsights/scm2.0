@@ -38,6 +38,11 @@ public class PageController {
         model.addAttribute("gitRepo", "https://github.com/SheetalTechInsights");
         return "home";
     }
+  
+    @RequestMapping(value = "/")
+    public String index() {
+        return "redirect:/home";
+    }
 
     @RequestMapping("/about")
     public String aboutPage() {
