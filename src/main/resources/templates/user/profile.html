@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th:replace="~{base::parent(~{::#content},~{::title},~{::script})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title data-th-text="${loggedInUser.name}+' |  SCM'">Profile Page</title>
 </head>
 <body>
-    <h1>This is profile page</h1>
+ 
+        <div id="content">
+<h1>Welcome to profile page</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim atque pariatur molestiae veritatis ab possimus commodi perspiciatis aspernatur totam. Voluptatem praesentium facere sunt quasi maxime, provident delectus iusto fugiat molestias!</p>
+        </div>
+       
+        <script>
+            console.log("Profile page")
+        </script>
 </body>
 </html>
