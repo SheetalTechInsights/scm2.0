@@ -23,6 +23,8 @@
             <div
               class="card block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
             >
+
+            <div data-th-replace="message::messagebox"></div>
               <h1 class="text-2xl font-semibold">Add New Contact</h1>
               <p> This contact will be stored on cloud, you can direct email this
                 client from scm...</p>
@@ -38,7 +40,7 @@
                 <div class="mb-3">
                 <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Name</label>
                 
-                <div class="relative mb-6">
+                <div class="relative mb-1">
   
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
    
@@ -50,16 +52,20 @@
                     data-th-field="*{name}"
                     type="text"
                    
-                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name">
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name">    
 
                 </div>
+                <p class="text-red-500" 
+                th:if="${#fields.hasErrors('name')}"
+                th:errors="*{name}"
+                >Invalid Name</p>
             </div>
 
             <!-- email form -->
             <div class="mb-3">
                 <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Email</label>
                 
-                <div class="relative mb-6">
+                <div class="relative mb-1">
   
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
    
@@ -73,13 +79,18 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@gmail.com">
 
                 </div>
+
+                <p class="text-red-500" 
+                th:if="${#fields.hasErrors('email')}"
+                th:errors="*{email}"
+                >Invalid Name</p>
             </div>
 
             <!-- phone form -->
             <div class="mb-3">
                 <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact phone</label>
                 
-                <div class="relative mb-6">
+                <div class="relative mb-1">
   
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
    
@@ -94,6 +105,11 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="8839657883">
 
                 </div>
+
+                <p class="text-red-500" 
+                th:if="${#fields.hasErrors('phoneNumber')}"
+                th:errors="*{phoneNumber}"
+                >Invalid Name</p>
             </div>
 
        <!-- Address form -->
@@ -103,6 +119,11 @@
             <textarea
              data-th-field="*{address}"
             id="message" rows="4" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body" placeholder="Write your address here..."></textarea>
+
+            <p class="text-red-500" 
+                th:if="${#fields.hasErrors('address')}"
+                th:errors="*{address}"
+                >Invalid Name</p>
         </div>
 
         <!-- description form -->
