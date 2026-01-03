@@ -48,10 +48,10 @@ public class User implements UserDetails{
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(length = 10000)
+    @Column(length = 1000)
     private String profilePic;
 
-    @Column(length = 10000)
+    @Column(length = 1000)
     private String about;
     private String phoneNumber;
 

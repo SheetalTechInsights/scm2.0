@@ -21,7 +21,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+// @ToString
 public class UserForm {
     @NotBlank(message = "UserName is required")
     @Size(min=3,message = "Min 3 character is required")
