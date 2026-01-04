@@ -39,6 +39,11 @@ public class ContactForm {
     private boolean favourite;
     private String websiteLink;
     private String linkedinLink;
-    private MultipartFile profileImage;
+
+    //annotation create krenge jo file ko validate krenge
+    //size
+    //validation
+    
+    private MultipartFile contactImage;
     
 }

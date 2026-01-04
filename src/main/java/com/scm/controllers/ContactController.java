@@ -1,5 +1,9 @@
 package com.scm.controllers;
 
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import com.scm.helper.Helper;
 import com.scm.helper.Message;
 import com.scm.helper.MessageType;
 import com.scm.services.ContactService;
+import com.scm.services.ImageService;
 import com.scm.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,9 +31,13 @@ import com.scm.entities.User;
 @RequestMapping("/user/contacts")
 public class ContactController {
 
-
+    private Logger logger = LoggerFactory.getLogger(ContactController.class);  
+     
     @Autowired
     private ContactService contactService;
+
+    @Autowired
+    private ImageService imageService;
 
     @Autowired
     private UserService userService;
@@ -67,7 +76,15 @@ public class ContactController {
       
         User user = userService.getUserByEmail(username);
 
-        //process the contact picture
+        //process the contact picture(upload krna )
+
+        String filename = UUID.randomUUID().toString();
+
+       String fileURL =  imageService.uploadImage(contactForm.getContactImage(),filename);
+
+
+    
+        logger.info("file information: {}",contactForm.getContactImage().getOriginalFilename());
 
         Contact contact = new Contact();
         contact.setName(contactForm.getName());
@@ -80,7 +97,7 @@ public class ContactController {
         contact.setLinkdInLink(contactForm.getLinkedinLink());
         contact.setWebsiteLink(contactForm.getWebsiteLink());
 
-
+        contact.setPicture(fileURL);
         contactService.save(contact);
 
         System.out.println("post controller hit");
