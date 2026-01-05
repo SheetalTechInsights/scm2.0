@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title>All Your Contacts</title>
+  </head>
+
+  <body>
+    <div id="content">
+
+      <!-- sidebar -->
+      <div th:if="${loggedInUser}">
+        <div data-th-replace="~{user/sidebar :: sidebar}"></div>
+      </div>
+
+      <div class="sm:pl-64 pt-20">
+        <div>
+          <h1 class="text-5xl text-center">All Your Contacts</h1>
+          <p class="text-center">List of all contacts...</p>
+
+          <div class="contacts_container p-5">
+
+            <!-- SEARCH + EXPORT -->
+            <div
+              class="flex md:flex-row flex-col items-center px-4 justify-between bg-white dark:bg-gray-900"
+            >
+              <form
+                data-th-object="${contactSearchForm}"
+                data-th-action="@{'/user/contacts/search'}"
+                method="get"
+              >
+                <div
+                  class="flex space-x-3 p-5 items-center flex-wrap md:flex-row space-y-4 md:space-y-0"
+                >
+                  <select
+                    
+                    class="bg-gray-50 border border-gray-300 text-sm rounded-lg p-2.5"
+                  >
+                    <option value="">Select Field</option>
+                    <option value="name">Name</option>
+                    <option value="phone">Phone</option>
+                    <option value="email">Email</option>
+                  </select>
+
+                  <div class="relative">
+                    <input
+                     
+                      type="text"
+                      class="block p-2 ps-4 text-sm border rounded-lg w-80"
+                      placeholder="Search contacts"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="px-3 py-2 bg-gray-800 text-white rounded"
+                  >
+                    Search
+                  </button>
+                </div>
+              </form>
+
+              <button
+                type="button"
+                onclick="exportData()"
+                class="px-3 py-2 bg-green-800 text-white rounded"
+              >
+                Export
+              </button>
+            </div>
+
+            <!-- TABLE -->
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+              <div data-th-replace="~{message :: messagebox}"></div>
+
+              <table
+                id="contact-table"
+                class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                th:if="${contacts != null and !#lists.isEmpty(contacts)}"
+              >
+                <thead
+                  class="text-xs uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                >
+                  <tr>
+                    <th class="px-6 py-3">Name</th>
+                    <th class="px-6 py-3">Phone</th>
+                    <th class="px-6 py-3">Links</th>
+                    <th class="px-6 py-3">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr
+                    th:each="c : ${contacts}"
+                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  >
+                    <!-- NAME -->
+                    <td class="flex items-center px-6 py-4">
+                      <img
+                        onerror="this.src='https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'"
+                        class="w-10 h-10 rounded-full"
+                        th:src="${c.picture != null && !#strings.isEmpty(c.picture)} ? @{${c.picture}} : @{/images/default.png}"
+                        alt="profile"
+                      />
+                      <div class="ps-3">
+                        <div
+                          class="text-base font-semibold text-gray-900 dark:text-white"
+                          th:text="${c.name}"
+                        ></div>
+                        <div
+                          class="font-normal text-gray-500"
+                          th:text="${c.email}"
+                        ></div>
+                      </div>
+                    </td>
+
+                    <!-- PHONE -->
+                    <td class="px-6 py-4">
+                      <i class="fa-solid fa-phone"></i>
+                      <span th:text="${c.phoneNumber}"></span>
+                    </td>
+
+                    <!-- LINKS -->
+                    <td class="px-6 py-4">
+                      <div class="flex items-center space-x-3">
+                        <a th:href="${c.websiteLink}" target="_blank">
+                          <i class="fa-solid fa-link"></i>
+                        </a>
+                        <a th:href="${c.linkedInLink}" target="_blank">
+                          <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                      </div>
+                    </td>
+
+                    <!-- ACTIONS -->
+                    <td class="px-6 py-4 space-x-3">
+                      <button th:onclick="deleteContact([[${c.id}]])">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+
+                      <a th:href="@{'/user/contacts/view/' + ${c.id}}">
+                        <i class="fa-solid fa-pen"></i>
+                      </a>
+
+                      <button th:onclick="loadContactdata([[${c.id}]])">
+                        <i class="fa-solid fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- NO DATA -->
+              <h1
+                class="text-4xl text-center bg-white dark:bg-gray-800 dark:text-white p-4"
+                th:if="${contacts == null or #lists.isEmpty(contacts)}"
+              >
+                No contacts found
+              </h1>
+
+            </div>
+          </div>
+        </div>
+
+        <div data-th-replace="~{user/contact_modals :: contact}"></div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@linways/table-to-excel@1.0.4/dist/tableToExcel.min.js"></script>
+    <script data-th-src="@{'/js/contacts.js'}"></script>
+
+    <script>
+      function exportData() {
+        TableToExcel.convert(document.getElementById("contact-table"), {
+          name: "contacts.xlsx",
+          sheet: { name: "Sheet 1" },
+        });
+      }
+    </script>
+  </body>
+</html>
