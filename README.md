@@ -125,3 +125,80 @@ scm2.0
 │   └── js
 │
 └── application.properties
+
+
+Configuration
+🔹 Database (MySQL)
+spring.datasource.url=jdbc:mysql://localhost:3306/scm20
+spring.datasource.username=root
+spring.datasource.password=YOUR_DB_PASSWORD
+
+🔹 JPA Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+🔹 OAuth2 Configuration
+spring.security.oauth2.client.registration.google.client-id=YOUR_GOOGLE_CLIENT_ID
+spring.security.oauth2.client.registration.google.client-secret=YOUR_GOOGLE_CLIENT_SECRET
+
+spring.security.oauth2.client.registration.github.client-id=YOUR_GITHUB_CLIENT_ID
+spring.security.oauth2.client.registration.github.client-secret=YOUR_GITHUB_CLIENT_SECRET
+
+🔹 Email (Gmail SMTP)
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=your_email@gmail.com
+spring.mail.password=YOUR_GMAIL_APP_PASSWORD
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+🔹 Cloudinary
+cloudinary.cloud-name=YOUR_CLOUD_NAME
+cloudinary.api.key=YOUR_API_KEY
+cloudinary.api.secret=YOUR_API_SECRET
+
+▶ How to Run the Project
+1️⃣ Clone the repository
+git clone https://github.com/SheetalTechInsights/scm2.0.git
+
+2️⃣ Configure application.properties
+3️⃣ Build and run
+mvn clean install
+mvn spring-boot:run
+
+4️⃣ Open in browser
+http://localhost:8081
+
+🔒 Security Best Practices Used
+
+OAuth2 authentication
+
+Password encryption
+
+User-specific authorization
+
+Cloud-based secure image storage
+
+Input validation using JSR-303
+
+📈 Future Enhancements
+
+Email verification after signup
+
+Forgot password functionality
+
+Role-based access control
+
+REST API version
+
+Docker & cloud deployment
+
+Admin dashboard
+
+👨‍💻 Author
+
+Sheetal Patidar
+Bachelor of Engineering – CSE (AI & ML)
+Acropolis Institute of Technology & Research, Indore
+
+🔗 GitHub: https://github.com/SheetalTechInsights
