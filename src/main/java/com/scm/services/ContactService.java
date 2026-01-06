@@ -2,39 +2,41 @@ package com.scm.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.scm.entities.Contact;
 import com.scm.entities.User;
 
 public interface ContactService {
-    //All methods
- 
-    //save user
+    // save contacts
     Contact save(Contact contact);
-     
-    //update user
 
+    // update contact
     Contact update(Contact contact);
-     
-    //get user
 
+    // get contacts
     List<Contact> getAll();
 
-    //get by id
+    // get contact by id
 
     Contact getById(String id);
-     
-    //delete contact
+
+    // delete contact
 
     void delete(String id);
-     
-    //search
 
-    List<Contact> search(String name, String email, String phoneNumber);
+    // search contact
+    Page<Contact> searchByName(String nameKeyword, int size, int page, String sortBy, String order, User user);
 
-    //get contact by user id
+    Page<Contact> searchByEmail(String emailKeyword, int size, int page, String sortBy, String order, User user);
 
-    List<Contact> getByUserId(String id);
+    Page<Contact> searchByPhoneNumber(String phoneNumberKeyword, int size, int page, String sortBy, String order,
+            User user);
 
-    List<Contact> getByUser(User user);
-    
+    // get contacts by userId
+    List<Contact> getByUserId(String userId);
+
+    Page<Contact> getByUser(User user, int page, int size, String sortField, String sortDirection);
+
 }
