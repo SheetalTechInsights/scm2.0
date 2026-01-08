@@ -125,12 +125,12 @@ scm2.0
 │   └── js
 │
 └── application.properties
-
+```
 
 ## ⚙️ Configuration
 
 ### 🔹 Database (MySQL)
-```properties
+
 spring.datasource.url=jdbc:mysql://localhost:3306/scm20
 spring.datasource.username=root
 spring.datasource.password=YOUR_DB_PASSWORD
@@ -169,7 +169,7 @@ mvn clean install
 mvn spring-boot:run
 
 4️⃣ Open in browser
-http://localhost:8081
+http://localhost:8082
 
 ### 🔒 Security Best Practices Used
 
